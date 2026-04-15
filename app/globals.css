@@ -1,0 +1,232 @@
+/* ── Fonts ─────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Variables ─────────────────────────────────────────
+   All colors stored as space-separated R G B channels so that
+   Tailwind's opacity modifier syntax (e.g. bg-dark-card/60)
+   resolves to valid CSS:  rgb(R G B / 0.6)
+──────────────────────────────────────────────────────────── */
+
+/* Light mode (default) — beige + apple-green accent */
+:root {
+  --color-base:     244 241 232;   /* #F4F1E8 – soft warm beige     */
+  --color-surface:  237 233 222;   /* #EDE9DE – slightly deeper     */
+  --color-card:     255 255 255;   /* #FFFFFF – white cards         */
+  --color-border:   216 208 196;   /* #D8D0C4 – warm border         */
+  --color-muted:    90 74 66;      /* #5A4A42 – warm brown muted    */
+  --color-fg:       35 21 18;      /* #231512 – dark chocolate text */
+  --color-fg-muted: 90 74 66;      /* #5A4A42 – secondary text      */
+  --scrollbar-thumb: 216 208 196;
+  --scrollbar-track: 244 241 232;
+  /* Light mode accent: soft apple-green */
+  --accent-light:   143 207 138;   /* #8FCF8A */
+}
+
+/* Dark mode (#0B0706 near-black premium) */
+.dark {
+  --color-base:     11 7 6;        /* #0B0706 – near black premium  */
+  --color-surface:  19 14 12;      /* #130E0C – subtle lift         */
+  --color-card:     28 21 18;      /* #1C1512 – card surface        */
+  --color-border:   44 31 27;      /* #2C1F1B – dividers            */
+  --color-muted:    138 100 90;    /* warm muted text               */
+  --color-fg:       255 255 255;   /* white                         */
+  --color-fg-muted: 210 200 196;   /* warm dim white                */
+  --scrollbar-thumb: 44 31 27;
+  --scrollbar-track: 11 7 6;
+}
+
+/* ─── Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--scrollbar-thumb)) rgb(var(--scrollbar-track));
+}
+html::-webkit-scrollbar { width: 5px; }
+html::-webkit-scrollbar-track { background: rgb(var(--scrollbar-track)); }
+html::-webkit-scrollbar-thumb {
+  background: rgb(var(--scrollbar-thumb));
+  border-radius: 3px;
+}
+html::-webkit-scrollbar-thumb:hover { background: #D6F49D; }
+
+body {
+  font-family: 'Space Grotesk', Inter, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(var(--color-base));
+  color: rgb(var(--color-fg));
+  transition: background-color 0.28s ease, color 0.28s ease;
+}
+
+/* ─── Noise overlay ─────────────────────────────────────── */
+.noise-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* ─── Utilities ─────────────────────────────────────────── */
+@layer utilities {
+  .glow-lime        { box-shadow: 0 0 20px rgba(214,244,157,0.35), 0 0 60px rgba(214,244,157,0.1); }
+  .glow-lime-sm     { box-shadow: 0 0 8px rgba(214,244,157,0.28); }
+  .glow-text-lime   { text-shadow: 0 0 18px rgba(214,244,157,0.55); }
+  .border-glow-lime {
+    border-color: #D6F49D;
+    box-shadow: 0 0 14px rgba(214,244,157,0.28), inset 0 0 14px rgba(214,244,157,0.05);
+  }
+  .section-padding  { @apply px-5 sm:px-10 md:px-16 lg:px-24 xl:px-32; }
+}
+
+/* ─── Scanlines ─────────────────────────────────────────── */
+.scanlines::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom, transparent, transparent 2px,
+    rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+  );
+  z-index: 1;
+}
+
+/* ─── Terminal cursor ───────────────────────────────────── */
+.cursor {
+  display: inline-block;
+  width: 0.52em;
+  height: 1.1em;
+  background-color: #D6F49D;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+  border-radius: 1px;
+}
+
+/* ─── Shimmer text ──────────────────────────────────────── */
+.shimmer-text {
+  background: linear-gradient(90deg, #D6F49D 0%, #ffffff 40%, #D6F49D 60%, #b8d880 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+html:not(.dark) .shimmer-text {
+  background: linear-gradient(90deg, #8FCF8A 0%, #4a9645 40%, #8FCF8A 60%, #6db868 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* Light mode cursor */
+html:not(.dark) .cursor { background-color: #8FCF8A; }
+
+/* ─── Gradient borders ──────────────────────────────────── */
+.grad-border { position: relative; }
+.grad-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(214,244,157,0.45), rgba(214,244,157,0.08), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Light mode: remap explicit white/lime to stay legible ─
+   Tailwind utility classes use specific color values.
+   In light mode we override the ones that would produce
+   white-on-white or invisible text.
+──────────────────────────────────────────────────────────── */
+html:not(.dark) .text-white     { color: rgb(var(--color-fg)) !important; }
+html:not(.dark) .text-white\/90 { color: rgb(var(--color-fg) / 0.90) !important; }
+html:not(.dark) .text-white\/75 { color: rgb(var(--color-fg) / 0.75) !important; }
+html:not(.dark) .text-white\/60 { color: rgb(var(--color-fg) / 0.60) !important; }
+html:not(.dark) .text-white\/50 { color: rgb(var(--color-fg) / 0.50) !important; }
+html:not(.dark) .text-white\/40 { color: rgb(var(--color-fg) / 0.40) !important; }
+
+/* ── Light mode accent: remap lime → #8FCF8A (soft apple-green) ──── */
+
+/* Text */
+html:not(.dark) .text-lime       { color: #4a9645 !important; }
+html:not(.dark) .text-lime\/70   { color: rgba(74,150,69,0.85) !important; }
+html:not(.dark) .text-lime\/60   { color: rgba(74,150,69,0.75) !important; }
+html:not(.dark) .text-lime\/50   { color: rgba(74,150,69,0.65) !important; }
+html:not(.dark) .text-lime\/40   { color: rgba(74,150,69,0.55) !important; }
+
+/* Hover text (nav, links, icon hover) */
+html:not(.dark) .hover\:text-lime:hover              { color: #4a9645 !important; }
+html:not(.dark) .group:hover .group-hover\:text-lime { color: #4a9645 !important; }
+html:not(.dark) .group:hover .group-hover\:text-fg   { color: #231512 !important; }
+
+/* Backgrounds */
+html:not(.dark) .bg-lime         { background-color: #8FCF8A !important; }
+html:not(.dark) .bg-lime\/10     { background-color: rgba(143,207,138,0.18) !important; }
+html:not(.dark) .bg-lime\/15     { background-color: rgba(143,207,138,0.22) !important; }
+html:not(.dark) .bg-lime\/20     { background-color: rgba(143,207,138,0.26) !important; }
+html:not(.dark) .hover\:bg-lime:hover      { background-color: #7dc478 !important; }
+html:not(.dark) .hover\:bg-lime\/10:hover  { background-color: rgba(143,207,138,0.18) !important; }
+
+/* Borders */
+html:not(.dark) .border-lime\/20 { border-color: rgba(143,207,138,0.30) !important; }
+html:not(.dark) .border-lime\/30 { border-color: rgba(143,207,138,0.40) !important; }
+html:not(.dark) .border-lime\/40 { border-color: rgba(143,207,138,0.50) !important; }
+html:not(.dark) .border-lime\/50 { border-color: rgba(143,207,138,0.60) !important; }
+html:not(.dark) .hover\:border-lime\/30:hover { border-color: rgba(143,207,138,0.40) !important; }
+html:not(.dark) .hover\:border-lime\/40:hover { border-color: rgba(143,207,138,0.50) !important; }
+html:not(.dark) .hover\:border-lime\/50:hover { border-color: rgba(143,207,138,0.60) !important; }
+
+/* Focus states (form inputs) */
+html:not(.dark) .focus\:border-lime\/60:focus { border-color: rgba(143,207,138,0.75) !important; }
+html:not(.dark) .focus\:ring-lime\/20:focus   { --tw-ring-color: rgba(143,207,138,0.25) !important; }
+
+/* Misc dot / pulse accent */
+html:not(.dark) .bg-lime\/60     { background-color: rgba(143,207,138,0.75) !important; }
+
+/* Cards = white, surfaces slightly off-white */
+html:not(.dark) .bg-dark-card\/60  { background-color: rgba(255,255,255,0.85) !important; }
+html:not(.dark) .bg-dark-card\/50  { background-color: rgba(255,255,255,0.75) !important; }
+html:not(.dark) .bg-dark-card\/40  { background-color: rgba(255,255,255,0.65) !important; }
+html:not(.dark) .bg-dark-card      { background-color: #ffffff !important; }
+html:not(.dark) .hover\:bg-dark-card:hover { background-color: #ffffff !important; }
+
+/* Borders */
+html:not(.dark) .border-dark-border\/80 { border-color: rgba(216,208,196,0.90) !important; }
+html:not(.dark) .border-dark-border\/60 { border-color: rgba(216,208,196,0.80) !important; }
+html:not(.dark) .border-dark-border\/50 { border-color: rgba(216,208,196,0.70) !important; }
+html:not(.dark) .border-dark-border\/40 { border-color: rgba(216,208,196,0.60) !important; }
+
+/* Button text: dark chocolate on light-green button for readability */
+html:not(.dark) .text-dark-base    { color: #231512 !important; }
+
+/* Shadows */
+html:not(.dark) .hover\:shadow-lime-sm:hover { box-shadow: 0 0 8px rgba(143,207,138,0.35) !important; }
+html:not(.dark) .hover\:shadow-lime-md:hover { box-shadow: 0 0 22px rgba(143,207,138,0.45) !important; }
+
+/* Gradient borders */
+html:not(.dark) .grad-border::before {
+  background: linear-gradient(135deg, rgba(143,207,138,0.45), rgba(143,207,138,0.10), transparent) !important;
+}
+
+/* Form inputs – explicit dark/light text */
+html.dark  input, html.dark  textarea { color: #ffffff; }
+html:not(.dark) input, html:not(.dark) textarea { color: #1C1814; }
+html.dark  input::placeholder, html.dark  textarea::placeholder { color: rgba(255,255,255,0.35); }
+html:not(.dark) input::placeholder, html:not(.dark) textarea::placeholder { color: rgba(28,24,20,0.40); }
