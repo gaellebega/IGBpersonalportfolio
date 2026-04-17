@@ -3,6 +3,7 @@ import FloatingNav from '@/components/layout/FloatingNav';
 import TopBar from '@/components/layout/TopBar';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
+import Education from '@/components/sections/Education';
 import Projects from '@/components/sections/Projects';
 import HonorsAwards from '@/components/sections/HonorsAwards';
 import SocialLinks from '@/components/sections/SocialLinks';
@@ -20,6 +21,7 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <Education />
         <Projects />
         <HonorsAwards />
         <SocialLinks />

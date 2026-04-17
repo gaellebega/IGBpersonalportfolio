@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Mail, ArrowUpRight, CheckCircle, Send } from 'lucide-react';
+import { Mail, Phone, ArrowUpRight, CheckCircle, Send } from 'lucide-react';
 import { personalInfo, socials } from '@/lib/data';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -133,6 +133,19 @@ export default function Contact() {
               </span>
               <ArrowUpRight size={14} className="ml-auto text-muted group-hover:text-lime transition-colors flex-shrink-0" />
             </a>
+
+            {/* Phone */}
+            <a
+              href={`tel:${personalInfo.phone.replace(/\s/g, '')}`}
+              className="group inline-flex items-center gap-3 px-5 py-4 rounded-xl bg-dark-card/60 border border-dark-border/60 hover:border-lime/50 hover:shadow-lime-sm transition-all duration-200 w-full"
+            >
+              <Phone size={18} className="text-lime flex-shrink-0" />
+              <span className="font-mono text-sm text-fg-muted group-hover:text-lime transition-colors truncate">
+                {personalInfo.phone}
+              </span>
+              <ArrowUpRight size={14} className="ml-auto text-muted group-hover:text-lime transition-colors flex-shrink-0" />
+            </a>
+
 
             {/* Social links */}
             <div className="space-y-3">
