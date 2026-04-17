@@ -54,6 +54,7 @@ html::-webkit-scrollbar-thumb {
   border-radius: 3px;
 }
 html::-webkit-scrollbar-thumb:hover { background: #D6F49D; }
+html:not(.dark)::-webkit-scrollbar-thumb:hover { background: #8FCF8A; }
 
 body {
   font-family: 'Space Grotesk', Inter, system-ui, sans-serif;
@@ -199,6 +200,16 @@ html:not(.dark) .focus\:ring-lime\/20:focus   { --tw-ring-color: rgba(143,207,13
 
 /* Misc dot / pulse accent */
 html:not(.dark) .bg-lime\/60     { background-color: rgba(143,207,138,0.75) !important; }
+
+/* text-lime/80 (Education status badge, etc.) */
+html:not(.dark) .text-lime\/80   { color: rgba(74,150,69,0.90) !important; }
+
+/* Hover bg: lime-dim (CTA buttons) */
+html:not(.dark) .hover\:bg-lime-dim:hover { background-color: #7dc478 !important; }
+
+/* Glow text (logo, stat numbers) */
+html:not(.dark) .hover\:glow-text-lime:hover,
+html:not(.dark) .glow-text-lime { text-shadow: 0 0 14px rgba(143,207,138,0.55) !important; }
 
 /* Cards = white, surfaces slightly off-white */
 html:not(.dark) .bg-dark-card\/60  { background-color: rgba(255,255,255,0.85) !important; }

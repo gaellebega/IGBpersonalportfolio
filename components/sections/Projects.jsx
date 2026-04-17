@@ -42,14 +42,6 @@ function ProjectCard({ project, index, onClick, t }) {
 
       {/* Content */}
       <div className="relative z-10 p-6 flex flex-col h-full min-h-[260px] justify-end">
-        <div className="absolute top-5 left-5 flex flex-wrap gap-1.5">
-          {project.featured && (
-            <span className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-lime/15 text-lime border border-lime/30 tracking-wider">
-              {t('projects.featured')}
-            </span>
-          )}
-        </div>
-
         <div className="space-y-3">
           <h3 className="text-xl font-bold text-fg group-hover:text-lime transition-colors duration-200">
             {project.title}
@@ -89,7 +81,7 @@ function ProjectCard({ project, index, onClick, t }) {
   );
 }
 
-function ProjectModal({ project, onClose, t }) {
+function ProjectModal({ project, onClose }) {
   if (!project) return null;
   return (
     <motion.div
@@ -125,11 +117,6 @@ function ProjectModal({ project, onClose, t }) {
           <div className="flex items-start justify-between">
             <div>
               <h3 className="text-2xl font-bold text-fg">{project.title}</h3>
-              {project.featured && (
-                <span className="font-mono text-[10px] text-lime tracking-wider">
-                  {t('projects.featured')} PROJECT
-                </span>
-              )}
             </div>
             <button onClick={onClose}
               className="p-2 rounded-xl text-muted hover:text-fg hover:bg-dark-border/50 transition-all">
@@ -253,7 +240,7 @@ export default function Projects() {
 
       <AnimatePresence>
         {selectedProject && (
-          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} t={t} />
+          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
         )}
       </AnimatePresence>
     </>
