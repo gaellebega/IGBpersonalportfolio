@@ -74,11 +74,6 @@ export default function Education() {
                 {item.institution}
               </h3>
 
-              {/* Full name (for A2SV) */}
-              {item.fullName && (
-                <p className="font-mono text-xs text-muted/70 mb-3">{item.fullName}</p>
-              )}
-
               {/* Degree / program */}
               <p className="text-sm text-muted leading-relaxed">{item.degree}</p>
 
